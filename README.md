@@ -41,3 +41,27 @@ LOGOUT
 
 authSlice
 authSaga
+
+
+
+
+
+
+
+
+
+### Handle loading / error in redux saga
+
+- RTK + Thunk : provide a way to await an async action right on component
+-> Handle loading / error on component easily
+
+- RTK + Saga : Doesn't have a way to do so
+-> HOw to do?
+
+Suggestion:
+- LOADING: can based o redux store
+- ERROR: eliminate the usage as much as you can
+
+Considerations: 
+- Trigger error toast from saga
+- Consider to call API directly on component instead of going through saga.

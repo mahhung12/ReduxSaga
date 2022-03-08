@@ -1,27 +1,12 @@
-import React, { useEffect } from "react";
-import cityApi from "api/cityApi";
-import { Route, Switch } from "react-router-dom";
-import LoginPage from "features/auth/pages/LoginPage";
-import { AdminLayout } from "components/Layout";
 import { NotFound, PrivateRoute } from "components/Common";
-import { useAppDispatch } from "app/hooks";
-import { Button } from "@material-ui/core";
-import { authActions } from "features/auth/authSlice";
+import { AdminLayout } from "components/Layout";
+import LoginPage from "features/auth/pages/LoginPage";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 
 function App() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    cityApi.getAll().then((response) => {
-      response.data.map((x) => x.code);
-    });
-  }, []);
-
   return (
     <>
-      <Button variant="contained" color="primary" onClick={() => dispatch(authActions.logout())}>
-        Logout
-      </Button>
       <div className="">
         <Switch>
           <Route path="/login">
