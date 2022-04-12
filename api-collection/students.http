@@ -8,7 +8,7 @@ GET {{baseUrl}}/students?_page=1&_limit=10&gender=male
 ###
 
 # @name getStudentById
-GET {{baseUrl}}/students/VxczGcM
+GET {{baseUrl}}/students/sktwi1cgkkuif36ff
 
 ###
 

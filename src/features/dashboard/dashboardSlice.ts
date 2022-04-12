@@ -1,6 +1,6 @@
-import { Student } from "models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
+import { Student } from "models";
 
 export interface DashboardStatistics {
   maleCount: number;
@@ -11,7 +11,6 @@ export interface DashboardStatistics {
 
 export interface RankingByCity {
   cityId: string;
-  cityName: string;
   rankingList: Student[];
 }
 
@@ -72,11 +71,11 @@ const dashboardSlice = createSlice({
 export const dashboardActions = dashboardSlice.actions;
 
 // Selectors
-const selectDashboardLoading = (state: RootState) => state.dashboard.loading;
-const selectDashboardStatistics = (state: RootState) => state.dashboard.statistics;
-const selectHighestStudentList = (state: RootState) => state.dashboard.highestStudentList;
-const selectLowestStudentList = (state: RootState) => state.dashboard.lowestStudentList;
-const selectRankingByCityList = (state: RootState) => state.dashboard.rankingByCityList;
+export const selectDashboardLoading = (state: RootState) => state.dashboard.loading;
+export const selectDashboardStatistics = (state: RootState) => state.dashboard.statistics;
+export const selectHighestStudentList = (state: RootState) => state.dashboard.highestStudentList;
+export const selectLowestStudentList = (state: RootState) => state.dashboard.lowestStudentList;
+export const selectRankingByCityList = (state: RootState) => state.dashboard.rankingByCityList;
 
 // Reducer
 const dashboardReducer = dashboardSlice.reducer;
