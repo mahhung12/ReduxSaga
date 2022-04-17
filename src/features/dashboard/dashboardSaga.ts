@@ -14,7 +14,6 @@ function* fetchStatistics() {
 
     const statisicList = responseList.map(x => x.pagination._totalRows);
     const [maleCount, femaleCount, highMarkCount, lowMarkCount] = statisicList;
-
     yield put(
         dashboardActions.setStatistics({ maleCount, femaleCount, highMarkCount, lowMarkCount })
     );
@@ -40,7 +39,6 @@ function* fetchLowestStudentList() {
     });
 
     yield put(dashboardActions.setLowestStudentList(data));
-
 }
 
 function* fetchRankingByCityList() {
