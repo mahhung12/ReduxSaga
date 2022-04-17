@@ -1,8 +1,10 @@
-import { Box, Grid, LinearProgress, makeStyles } from "@material-ui/core";
+import { Box, Grid, LinearProgress, makeStyles, Typography } from "@material-ui/core";
 import { ChatRounded, PeopleAlt, RoomOutlined, ShareSharp } from "@material-ui/icons";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import React, { useEffect } from "react";
 import StatisticItem from "./components/StatisticItem";
+import StudentRankingList from "./components/StudentRankingList";
+import Widget from "./components/Widget";
 import { 
   dashboardActions, 
   selectDashboardLoading, 
@@ -34,14 +36,6 @@ export default function DashboardFeature() {
   const rankingByCityList = useAppSelector(selectRankingByCityList);
 
   const classes = useStyles();
-
-  console.log({
-    loading, 
-    statistics,
-    highestStudentList,
-    lowestStudentList,
-    rankingByCityList,
-  })
 
   useEffect(() => {
     dispatch(dashboardActions.fetchData())
@@ -87,6 +81,45 @@ export default function DashboardFeature() {
           />
         </Grid>
       </Grid>
+
+      {/* All Students rankings */}
+      <Box mt={5}>
+        <Typography variant="h4">All Students</Typography>
+
+        <Box mt={2}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} lg={3}>
+              <Widget title="Student with highest mark">
+                <StudentRankingList studentList={highestStudentList}/>
+              </Widget>
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={3}>
+              <Widget title="Student with lowest mark">
+                <StudentRankingList studentList={lowestStudentList}/>
+              </Widget>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+
+      {/* Ranking by City */}
+      <Box mt={5}>
+        <Typography variant="h4">Rakings by city</Typography>
+
+        <Box mt={2}>
+          <Grid container spacing={3}>
+            {rankingByCityList.map(ranking => (
+              <Grid key={ranking.cityId} item xs={12} md={6} lg={3}>
+                <Widget title={ranking.cityName}>
+                  <StudentRankingList studentList={ranking.rankingList}/>
+                </Widget>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Box>
+
     </Box>
   );
 }
