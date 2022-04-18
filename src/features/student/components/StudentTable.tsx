@@ -23,6 +23,7 @@ export default function StudentTable({ studentList, onEdit, onRemove }: StudentT
             <Table className={classes.table} size="small" aria-label="table">
                 <TableHead>
                     <TableRow>
+                        <TableCell>#</TableCell>
                         <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Gender</TableCell>
@@ -35,6 +36,7 @@ export default function StudentTable({ studentList, onEdit, onRemove }: StudentT
                 <TableBody>
                     {studentList.map((student, idx) => (
                         <TableRow key={student.id}>
+                            <TableCell>{idx + 1}</TableCell>
                             <TableCell>{student.id}</TableCell>
                             <TableCell>{student.name}</TableCell>
                             <TableCell>{student.gender}</TableCell>
@@ -42,15 +44,15 @@ export default function StudentTable({ studentList, onEdit, onRemove }: StudentT
                             <TableCell>{student.city}</TableCell>
                             <TableCell align="right">
                                 <Button
+                                    size="small"
                                     className={classes.edit}
-                                    variant="contained"
                                     color="primary"
                                     onClick={() => onEdit?.(student)}
                                 >
                                     Edit
                                 </Button>
                                 <Button
-                                    variant="outlined"
+                                    size="small"
                                     color="secondary"
                                     onClick={() => onRemove?.(student)}
                                 >
