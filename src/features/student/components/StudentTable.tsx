@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@material-ui/core'
+import { makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Box } from '@material-ui/core'
 import { Student } from 'models';
+import { capitalizeString, getMarkColor } from 'utils';
 
 const useStyles = makeStyles(theme => ({
     table: {},
@@ -37,10 +38,14 @@ export default function StudentTable({ studentList, onEdit, onRemove }: StudentT
                     {studentList.map((student, idx) => (
                         <TableRow key={student.id}>
                             <TableCell>{idx + 1}</TableCell>
-                            <TableCell>{student.id}</TableCell>
+                            <TableCell width={310}>{student.id}</TableCell>
                             <TableCell>{student.name}</TableCell>
-                            <TableCell>{student.gender}</TableCell>
-                            <TableCell>{student.mark}</TableCell>
+                            <TableCell>{capitalizeString(student.gender)}</TableCell>
+                            <TableCell>
+                                <Box color={getMarkColor(student.mark)} fontWeight="bold">
+                                    {student.mark}
+                                </Box>
+                            </TableCell>
                             <TableCell>{student.city}</TableCell>
                             <TableCell align="right">
                                 <Button
