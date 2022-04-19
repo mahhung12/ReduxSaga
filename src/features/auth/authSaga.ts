@@ -40,6 +40,5 @@ function* watchLoginFlow() {
 }
 
 export function* authSaga() {
-  console.log("Auth Saga");
   yield fork(watchLoginFlow);
 }

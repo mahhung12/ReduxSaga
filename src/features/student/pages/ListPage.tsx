@@ -4,6 +4,7 @@ import { Pagination } from '@material-ui/lab'
 import { useEffect } from 'react';
 import StudentTable from '../components/StudentTable';
 import { selectStudentList, studentActions, selectStudentPaging, selectStudentFilter, selectStudentLoading } from '../studentSlice';
+import { selectCityMap } from 'features/city/citySlice';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,6 +33,7 @@ export default function ListPage() {
   const pagination = useAppSelector(selectStudentPaging);
   const filter = useAppSelector(selectStudentFilter);
   const loading = useAppSelector(selectStudentLoading);
+  const cityMap = useAppSelector(selectCityMap);
 
   const dispatch = useAppDispatch();
   const classes = useStyles()
@@ -59,7 +61,7 @@ export default function ListPage() {
       </Box>
 
       {/* Student Table */}
-      <StudentTable studentList={studentList} />
+      <StudentTable studentList={studentList} cityMap={cityMap} />
 
       {/* Pagination */}
       <Box my={2} display="flex" justifyContent="center">
