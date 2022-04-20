@@ -6,7 +6,8 @@ import StudentTable from '../components/StudentTable';
 import { selectStudentList, studentActions, selectStudentPaging, selectStudentFilter, selectStudentLoading } from '../studentSlice';
 import { selectCityList, selectCityMap } from 'features/city/citySlice';
 import StudentFilters from '../components/StudentFilters';
-import { ListParams } from 'models';
+import { ListParams, Student } from 'models';
+import studentApi from 'api/studentApi';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,8 +61,21 @@ export default function ListPage() {
     dispatch(studentActions.setFilter(newFilter));
   }
 
-  console.log({ cityList })
+  const handleRemoveStudent = async (student: Student) => {
+    try {
+      // Remove Student API
+      await studentApi.remove(student?.id || '');
 
+      // Trigger to re-fetch student list with current filter
+      // Clone to new object because the older object was have useRef
+      const newFilter = { ...filter };
+      dispatch(studentActions.setFilter(newFilter));
+
+    } catch (error) {
+      // Toast Error
+      console.log('Failed to fetch student', error);
+    }
+  }
 
   return (
     <Box className={classes.root}>
@@ -85,7 +99,11 @@ export default function ListPage() {
       </Box>
 
       {/* Student Table */}
-      <StudentTable studentList={studentList} cityMap={cityMap} />
+      <StudentTable
+        studentList={studentList}
+        cityMap={cityMap}
+        onRemove={handleRemoveStudent}
+      />
 
       {/* Pagination */}
       <Box my={2} display="flex" justifyContent="center">
