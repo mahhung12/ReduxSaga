@@ -53,10 +53,15 @@ export default function ListPage() {
   }
 
   const handleSearchChange = (newFilter: ListParams) => {
-    console.log('Search change: ', newFilter);
-
     dispatch(studentActions.setFilterWithDebounce(newFilter));
   }
+
+  const handleFilterChange = (newFilter: ListParams) => {
+    dispatch(studentActions.setFilter(newFilter));
+  }
+
+  console.log({ cityList })
+
 
   return (
     <Box className={classes.root}>
@@ -71,7 +76,12 @@ export default function ListPage() {
 
       {/* Filter */}
       <Box mb={3}>
-        <StudentFilters filter={filter} onSearchChange={handleSearchChange} />
+        <StudentFilters
+          filter={filter}
+          cityList={cityList}
+          onSearchChange={handleSearchChange}
+          onChange={handleFilterChange}
+        />
       </Box>
 
       {/* Student Table */}
