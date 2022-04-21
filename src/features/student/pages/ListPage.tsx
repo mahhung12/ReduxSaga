@@ -1,13 +1,14 @@
 import { Box, Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { Pagination } from '@material-ui/lab'
-import { useEffect } from 'react';
-import StudentTable from '../components/StudentTable';
-import { selectStudentList, studentActions, selectStudentPaging, selectStudentFilter, selectStudentLoading } from '../studentSlice';
-import { selectCityList, selectCityMap } from 'features/city/citySlice';
-import StudentFilters from '../components/StudentFilters';
-import { ListParams, Student } from 'models';
+import { Pagination } from '@material-ui/lab';
 import studentApi from 'api/studentApi';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { selectCityList, selectCityMap } from 'features/city/citySlice';
+import { ListParams, Student } from 'models';
+import { useEffect } from 'react';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import StudentFilters from '../components/StudentFilters';
+import StudentTable from '../components/StudentTable';
+import { selectStudentFilter, selectStudentList, selectStudentLoading, selectStudentPaging, studentActions } from '../studentSlice';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,6 +33,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function ListPage() {
+  const match = useRouteMatch();
+  const history = useHistory();
+
   const studentList = useAppSelector(selectStudentList);
   const pagination = useAppSelector(selectStudentPaging);
   const filter = useAppSelector(selectStudentFilter);
@@ -77,15 +81,22 @@ export default function ListPage() {
     }
   }
 
+  const handleEditStudent = async (student: Student) => {
+    history.push(`${match.url}/${student.id}`);
+  }
+
   return (
     <Box className={classes.root}>
       {loading && <LinearProgress className={classes.loading} />}
 
       <Box className={classes.titleContainer}>
         <Typography variant="h4">Students Management</Typography>
-        <Button variant="contained" color="primary">
-          Add new Student
-        </Button>
+
+        <Link to={`${match.url}/add`} style={{ textDecoration: 'none' }}>
+          <Button variant="contained" color="primary">
+            Add new Student
+          </Button>
+        </Link>
       </Box>
 
       {/* Filter */}
@@ -103,6 +114,7 @@ export default function ListPage() {
         studentList={studentList}
         cityMap={cityMap}
         onRemove={handleRemoveStudent}
+        onEdit={handleEditStudent}
       />
 
       {/* Pagination */}

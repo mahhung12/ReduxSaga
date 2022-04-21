@@ -43,6 +43,30 @@ authSlice
 authSaga
 
 
+ADD/EDIT
+- React Hook Form v7
+- Yup
+
+Routings
+- /admin/students/add: add new student
+- /admin/students/studentId: update a student
+
+Student Form
+- Mode: Add/Edit
+- Initial values
+- Values
+  - name: Text Input
+  - age: Number Input
+  - gender: Radio options
+  - city: Select
+  - mark: Number
+- Validations
+  - name: at least one value
+  - age: >= 18
+  - gender: male | female
+  - city: required
+  - mark: 0 -> 10 
+- Submission: redirect to student page list 
 
 
 
