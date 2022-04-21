@@ -6,6 +6,7 @@ import { selectCityList, selectCityMap } from 'features/city/citySlice';
 import { ListParams, Student } from 'models';
 import { useEffect } from 'react';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import StudentFilters from '../components/StudentFilters';
 import StudentTable from '../components/StudentTable';
 import { selectStudentFilter, selectStudentList, selectStudentLoading, selectStudentPaging, studentActions } from '../studentSlice';
@@ -69,6 +70,8 @@ export default function ListPage() {
     try {
       // Remove Student API
       await studentApi.remove(student?.id || '');
+
+      toast.success('Delete Student Successfully');
 
       // Trigger to re-fetch student list with current filter
       // Clone to new object because the older object was have useRef

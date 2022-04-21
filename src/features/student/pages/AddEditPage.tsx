@@ -4,6 +4,7 @@ import studentApi from 'api/studentApi';
 import { Student } from 'models';
 import { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import StudentForm from '../components/StudentForm';
 
 const useStyles = makeStyles(theme => ({
@@ -48,6 +49,10 @@ export default function AddEditPage() {
     } else {
       await studentApi.add(formValues);
     }
+
+    // Toast success
+    const message = isEdit ? 'Edit student successfully!!' : "Add student successfully!!"
+    toast.success(message)
 
     // Redirect back to student list
     history.push('/admin/students')

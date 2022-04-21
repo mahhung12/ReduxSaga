@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
 import {
-    makeStyles, Table, TableBody,
+    Box, Button, Dialog, DialogActions, DialogContent,
+    DialogContentText, DialogTitle, makeStyles, Paper, Table, TableBody,
     TableCell, TableContainer, TableHead,
-    TableRow, Paper, Button, Box,
-    Dialog, DialogActions, DialogContent,
-    DialogContentText, DialogTitle
+    TableRow
 } from '@material-ui/core';
 import { City, Student } from 'models';
+import { useState } from 'react';
 import { capitalizeString, getMarkColor } from 'utils';
 
 const useStyles = makeStyles(theme => ({
@@ -62,7 +61,7 @@ export default function StudentTable({ studentList, cityMap, onEdit, onRemove }:
                             <TableCell>Gender</TableCell>
                             <TableCell>Mark</TableCell>
                             <TableCell>City</TableCell>
-                            <TableCell align="right">Actions</TableCell>
+                            <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -82,7 +81,7 @@ export default function StudentTable({ studentList, cityMap, onEdit, onRemove }:
                                 <TableCell>
                                     {cityMap[student.city]?.name}
                                 </TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">
                                     <Button
                                         size="small"
                                         className={classes.edit}
