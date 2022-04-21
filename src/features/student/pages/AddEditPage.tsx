@@ -4,6 +4,7 @@ import studentApi from 'api/studentApi';
 import { Student } from 'models';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import StudentForm from '../components/StudentForm';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -39,7 +40,18 @@ export default function AddEditPage() {
     })()
   }, [studentId])
 
-  console.log('Student details : ', student);
+  const handleStudentFormSubmit = (formValues: Student) => {
+    // Handle Submit
+  }
+
+  const initialValues: Student = {
+    name: '',
+    age: '',
+    mark: '',
+    gender: 'male',
+    city: '',
+    ...student,
+  } as Student;
 
 
   return (
@@ -55,6 +67,15 @@ export default function AddEditPage() {
           {isEdit ? 'Edit student information' : 'Add new Student'}
         </Typography>
       </Box>
+
+      {(!isEdit || Boolean(student)) && (
+        <Box mt={1}>
+          <StudentForm
+            initialValue={initialValues}
+            onSubmit={handleStudentFormSubmit}
+          />
+        </Box>
+      )}
     </Box>
   );
 }
