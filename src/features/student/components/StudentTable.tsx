@@ -58,6 +58,7 @@ export default function StudentTable({ studentList, cityMap, onEdit, onRemove }:
                             <TableCell>#</TableCell>
                             <TableCell>ID</TableCell>
                             <TableCell>Name</TableCell>
+                            <TableCell>Age</TableCell>
                             <TableCell>Gender</TableCell>
                             <TableCell>Mark</TableCell>
                             <TableCell>City</TableCell>
@@ -71,6 +72,7 @@ export default function StudentTable({ studentList, cityMap, onEdit, onRemove }:
                                 <TableCell>{idx + 1}</TableCell>
                                 <TableCell width={310}>{student.id}</TableCell>
                                 <TableCell>{student.name}</TableCell>
+                                <TableCell>{student.age}</TableCell>
                                 <TableCell>{capitalizeString(student.gender)}</TableCell>
                                 <TableCell>
                                     <Box color={getMarkColor(student.mark)} fontWeight="bold">

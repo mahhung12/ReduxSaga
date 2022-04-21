@@ -1,16 +1,19 @@
-import { Box, Button } from '@material-ui/core';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Button, CircularProgress } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { useAppSelector } from 'app/hooks';
 import { InputField, SelectField } from 'components/FormFields';
 import { RadioGroupField } from 'components/FormFields/RadioGroupField';
 import { selectCityOption } from 'features/city/citySlice';
 import { Student } from 'models';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 export interface StudentFormProps {
     initialValue?: Student;
     onSubmit?: (formValues: Student) => void;
+    isEdit: boolean;
 }
 
 const schema = yup.object().shape({
@@ -38,16 +41,23 @@ const schema = yup.object().shape({
     city: yup.string().required("Please select City"),
 });
 
-export default function StudentForm({ initialValue, onSubmit }: StudentFormProps) {
+export default function StudentForm({ initialValue, onSubmit, isEdit }: StudentFormProps) {
     const cityOptions = useAppSelector(selectCityOption);
+    const [error, setError] = useState<string>('');
 
-    const { control, handleSubmit } = useForm<Student>({
+    const { control, handleSubmit, formState: { isSubmitting } } = useForm<Student>({
         defaultValues: initialValue,
         resolver: yupResolver(schema)
     })
 
-    const handleFormSubmit = (form: Student) => {
-        console.log(form)
+    const handleFormSubmit = async (formValues: Student) => {
+        try {
+            setError('');
+            await onSubmit?.(formValues);
+        } catch (e) {
+            setError((e as Error).message);
+            // console.log('Failed to add/update Student: ', error);
+        }
     }
 
     return (
@@ -67,10 +77,20 @@ export default function StudentForm({ initialValue, onSubmit }: StudentFormProps
 
                 <InputField name="mark" control={control} label="Mark" type="number" />
 
-                <SelectField name="city" control={control} label="City" options={cityOptions} />
+
+                {Array.isArray(cityOptions) && cityOptions.length > 0 && (
+                    <SelectField name="city" control={control} label="City" options={cityOptions} />
+                )}
+
+                {error &&
+                    <Alert severity="error">{error}</Alert>
+                }
 
                 <Box mt={2}>
-                    <Button type="submit" variant="contained" color="primary">Save</Button>
+                    <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+                        {isSubmitting && <CircularProgress size={16} color="primary" />} &nbsp;
+                        {isEdit ? 'Edit a Student' : 'Add new Student'}
+                    </Button>
                 </Box>
             </form>
         </Box>

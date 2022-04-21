@@ -3,7 +3,7 @@ import { ChevronLeft } from '@material-ui/icons';
 import studentApi from 'api/studentApi';
 import { Student } from 'models';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import StudentForm from '../components/StudentForm';
 
 const useStyles = makeStyles(theme => ({
@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function AddEditPage() {
   const classes = useStyles();
+  const history = useHistory();
 
   const { studentId } = useParams<{ studentId: string }>();
   const isEdit = Boolean(studentId);
@@ -40,8 +41,16 @@ export default function AddEditPage() {
     })()
   }, [studentId])
 
-  const handleStudentFormSubmit = (formValues: Student) => {
+  const handleStudentFormSubmit = async (formValues: Student) => {
     // Handle Submit
+    if (isEdit) {
+      await studentApi.update(formValues);
+    } else {
+      await studentApi.add(formValues);
+    }
+
+    // Redirect back to student list
+    history.push('/admin/students')
   }
 
   const initialValues: Student = {
@@ -73,6 +82,7 @@ export default function AddEditPage() {
           <StudentForm
             initialValue={initialValues}
             onSubmit={handleStudentFormSubmit}
+            isEdit={isEdit}
           />
         </Box>
       )}
