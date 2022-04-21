@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       opacity: '0.8',
     },
-  },
+  }
 }))
 
 export default function AddEditPage() {
