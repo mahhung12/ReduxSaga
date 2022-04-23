@@ -1,4 +1,4 @@
-# Mini Project - Student Management
+# Mini Project - Student Management 
 
 react-router-dom
 @types/react-router-dom
@@ -67,7 +67,6 @@ Student Form
   - city: required
   - mark: 0 -> 10 
 - Submission: redirect to student page list 
-
 
 
 
